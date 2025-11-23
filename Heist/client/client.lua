@@ -31,7 +31,7 @@ local MinigameCallbacks = {
 -- SECTION: UI SETUP
 --========================================
 
-HeistUi = WebUI("Heist", "main/nui/index.html")
+HeistUi = WebUI("Heist", "Heist/nui/index.html")
 
 --========================================
 -- SECTION: MINIGAME SYSTEM
@@ -100,3 +100,4 @@ end)
 function onShutdown()
     HeistUi:Destroy()
 end
+
