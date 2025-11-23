@@ -1,143 +1,163 @@
-🏦 Small Bank Heist – Summary (Mini-PRD)
+# 🏦 Small Bank Heist – Summary (Mini-PRD)
 
 A simplified, modular Fleeca-style bank heist designed to demonstrate clean logic, state flow, and server-validated systems.
 
-🔹 1. Overview
+---
+
+## 🔹 1. Overview
 
 This heist includes:
 
-Entry
+- **Entry** (with minigame)
+- **Vault access** (with minigame)
+- **Loot interaction** (With weight system)
+- **Escape validation** 
+- **Basic PD response**
 
-Vault access (with one minigame)
+> **Note:** Not a full heist — only the required skeleton.
 
-Loot interaction
+---
 
-Escape validation
+## 🔹 2. Heist Flow
 
-Basic PD response
+### 1. Start Conditions
+- 2–3 required items 
+- Minimum 2 players ( ⚠️ There's a problem here, and I'll comment on it below! ) 
+- Active cooldown check
 
-Not a full heist — only the required skeleton.
+### 2. Entry
+- Door hacking
+- alarm chance
 
-🔹 2. Heist Flow
-1. Start Conditions
+### 3. Vault
+- One minigame (pattern hack)
+- Vault opens on success
+- PD timer starts (auto-arrival)
 
-2–3 required items
+### 4. Looting
+- loot spots
+- capacity restrictions
 
-Minimum 2 players
+### 5. Escape
+- Escape radius or lose PD
+- Heist ends as success 
 
-Active cooldown check
+---
 
-2. Entry
+## 🔹 3. Data Model (Simplified)
 
-Door lockpick/hacking
-
-Silent alarm chance
-
-3. Vault
-
-One minigame (pattern hack / drill / lockpick)
-
-Vault opens on success
-
-PD timer starts (auto-arrival)
-
-4. Looting
-
-1–2 loot spots
-
-Time or capacity restrictions
-
-5. Escape
-
-Escape radius or lose PD
-
-Heist ends as success or failure
-
-🔹 3. Data Model (Simplified)
+```lua
 Config.Heist = {
-    cooldown = 1800,
-    requiredPlayers = 2,
-    requiredItems = { "drill", "electronic_kit", "keycard" },
-
-    timers = {
-        vaultPD = 120,
-        escape = 90
-    },
-
-    loot = {
-        cash = { min = 2000, max = 5000 },
-        jewels = { min = 1, max = 3 }
+    ["bank_heist_1"] = {
+        MinPlayers = 1,
+        AlarmChance = 50,
+        PDDelay = 30,
+        PDDelayAfterVaultOpen = 90,
+        startPoint = {},
+        MaxWeight = 2000,
+        DoorsConfig = {},
+        ItemsConfig = {},
+        SecurityConfig = {},
+        LootsConfig = {},
+        LosePoliceAndFinishConfig = {},
     }
+    --- here you can create more heist !
+
 }
+```
 
-🔹 4. State Machine
+---
+
+## 🔹 4. State Machine
+
+```
 IDLE → PREPARED → ENTRY → VAULT → LOOTING → ESCAPE → COMPLETE
+```
+
+**Transitions driven by:**
+- Requirements met
+- Door breached
+- Minigame success/fail
+- Loot completed
+- Escape or arrest
+
+---
+
+## 🔹 5. Server Logic
+
+The server is responsible for:
+
+- ✅ Validates items, player count, cooldown
+- ✅ Runs minigame results (client cannot fake)
+- ✅ Handles alarm + PD notification
+- ✅ Generates loot server-side
+
+---
+
+## 🔹 6. Minigame (Example)
+
+### Pattern Hack
+
+| Property | Value |
+|----------|-------|
+| **Sequence** | 4–7 symbols |
+| **Mistakes Allowed** | 3 |
+| **Success** | Vault opens |
+| **Failure** | Instant PD alert |
+
+---
+
+## 🔹 7. PD Trigger
+
+- Silent alarm chance (e.g., 40%)
+- PD receives bank location
+- Auto-arrival after vault timer
+
+---
+
+## 🔹 8. Non-Functional Requirements
+
+| Requirement | Description |
+|-------------|-------------|
+| **Modular** | Usable in any small bank |
+| **Secure** | Safe from client exploits |
+
+---
+
+## 🔹 9. Submission
+
+**Include:**
+
+1. ✅ Lua implementation
+2. ✅ Clean comments
+3. ✅ This Markdown explanation
 
 
-Transitions driven by:
+---
 
-Requirements met
 
-Door breached
 
-Minigame success/fail
+ ## ⚠️ Known Issues & Limitations
 
-Loot completed
+During script development, I unfortunately encountered some technical problems:
 
-Escape or arrest
+🔴 Problems Encountered
 
-🔹 5. Server Logic
+Helix Native doors (So I created a little system to simulate doors, just to make it look nice.)
 
-Validates items, player count, cooldown
+Multiplayer System
 
-Runs minigame results (client cannot fake)
+I had problems with multiplayer. To save time, I implemented a solution that supports multiplayer with some slight changes to how to retrieve the player src.
 
-Handles alarm + PD notification
+⚠️ It was not possible to test with real multiplayer, only with 2 local instances. (😔)
 
-Generates loot server-side
+State Persistence
 
-Maintains heist state across disconnects
+Problems saving the heist state and continuing if the player leaves. The reconnection functionality during an active heist is not fully implemented.
 
-🔹 6. Minigame (Example)
+NUI Interface
 
-Pattern Hack
+I had some problems with NUI (irrelevant to the test)
 
-4–7 symbol sequence
 
-10s limit
-
-2 mistakes allowed
-
-Success → vault opens
-
-Failure → instant PD alert
-
-🔹 7. PD Trigger
-
-Silent alarm chance (e.g., 40%)
-
-Loud alarm on minigame fail
-
-PD receives bank location + alarm type
-
-Auto-arrival after vault timer
-
-🔹 8. Non-Functional Requirements
-
-Modular (usable in any small bank)
-
-Safe from client exploits
-
-Reload-safe (server stores state)
-
-🔹 9. Submission
-
-Include:
-
-Lua implementation
-
-Clean comments
-
-This Markdown explanation
-
-Optional screenshots/GIFs
+**Made with ❤️**
