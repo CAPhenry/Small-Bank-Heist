@@ -2,6 +2,14 @@
 
 A simplified, modular Fleeca-style bank heist designed to demonstrate clean logic, state flow, and server-validated systems.
 
+
+# Required packages to this script
+
+QB-core asset pack
+
+Hl job items
+
+
 ---
 
 ## 🔹 1. Overview
