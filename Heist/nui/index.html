@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+    <div class="phone hide" aria-hidden="true">
+        <div class="screen">
+            <div id="msgBox" class="message"></div>
+        </div>
+    </div>
+    <div class="wrapper" >
+        <div class="sidebar">
+            <div>
+                <button id="btn-start" class="btn-primary" style="width: 100%; margin-top: 6px;">
+                    Start Minigame
+                </button>
+                <button id="btn-close" class="btn-close" style="width: 100%; margin-top: 6px;">
+                    Close
+                </button>
+            </div>
+            <div class="status-box">
+                <div class="status-label">Status</div>
+                <div id="status-text" class="status-text">
+                    <!-- Select a minigame and click on <strong>Start</strong>. -->
+                </div>
+            </div>
+        </div>
+        <div class="game-area">
+            <div class="game-container">
+                <!-- HEADER -->
+                <div class="game-header">
+                    <div class="game-title" id="game-title">Pattern Hack</div>
+                    <div class="game-meta">
+                        <div class="badge">Difficulty: <span id="difficulty-label">Average</span></div>
+                        <div class="badge" id="attempts-label">Attempts: 3</div>
+                    </div>
+                </div>
+
+                <!-- PATTERN HACK -->
+                <div id="pattern-game">
+                    <div class="pattern-info">
+                        Memorize the light pattern and click on the blocks in the same order.
+                    </div>
+                    <div class="pattern-grid" id="pattern-grid">
+                    </div>
+                    <div class="pattern-info" id="pattern-round">
+                        Round: <span>0</span>
+                    </div>
+                </div>
+
+                <!-- TIMING HACK -->
+                <div id="timing-game">
+                    <div class="timing-wrapper">
+                        <div class="timing-track" id="timing-track">
+                            <div class="timing-target" id="timing-target"></div>
+                            <div class="timing-cursor" id="timing-cursor"></div>
+                        </div>
+                        <div class="timing-stats">
+                            <span>Corrects: <strong id="timing-hits">0</strong> / <span id="timing-required">3</span></span>
+                            <span>Remaining attempts: <strong id="timing-attempts">3</strong></span>
+                        </div>
+                        <div class="timing-tip">
+                            Click on <strong>Start</strong> and then press the <strong>Hack!</strong> button.
+                            when the cursor is inside the blue area.
+                        </div>
+                        <button id="timing-fire" class="btn-primary" style="margin-top: 4px;">
+                            Hack!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src='script.js'></script>
+</html>
